@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 public class BookCaseDAO {
     private ConnDB conn = new ConnDB();
@@ -44,7 +45,7 @@ public class BookCaseDAO {
     public BookCaseForm queryM(BookCaseForm bookCaseForm) {
         BookCaseForm bookCaseForm1 = null;
         String sql = "select * from tb_bookcase where id=?";
-        System.out.println("SQL:" + sql);
+        Logger.getLogger(getClass().getName()).info("SQL:" + sql);
         ResultSet rs = conn.executeQuery(sql,bookCaseForm.getId());
         try {
             while (rs.next()) {
@@ -74,7 +75,7 @@ public class BookCaseDAO {
             } else {
                 sql = "Insert into tb_bookcase (name) values(?)";
                 falg = conn.executeUpdate(sql, bookCaseForm.getName());
-                System.out.println("SQL:" + sql);
+                Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,7 +84,7 @@ public class BookCaseDAO {
                 conn.close();
             }
         }
-        System.out.println("falg:" + falg);
+        Logger.getLogger(getClass().getName()).info("falg:" + falg);
         return falg;
     }
 
@@ -92,7 +93,7 @@ public class BookCaseDAO {
         String sql = "Update tb_bookcase set name=? where id=?";
         try {
             int falg = conn.executeUpdate(sql,bookCaseForm.getName(),bookCaseForm.getId());
-            System.out.println("SQL:" + sql);
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return falg;
         } finally {
             if (conn != null) {
@@ -106,7 +107,7 @@ public class BookCaseDAO {
         String sql = "Delete from tb_bookcase where id=?";
         try {
             int falg = conn.executeUpdate(sql, bookCaseForm.getId());
-            System.out.println("SQL:" + sql);
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return falg;
         } finally {
             if (conn != null) {

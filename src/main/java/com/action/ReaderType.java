@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.logging.Logger;
 
 public class ReaderType extends Action {
     private ReaderTypeDAO readerTypeDAO = null;
@@ -21,7 +22,7 @@ public class ReaderType extends Action {
                                  HttpServletRequest request,
                                  HttpServletResponse response) {
         String action = request.getParameter("action");
-        System.out.println("\nreaderType*********************action=" + action);
+        Logger.getLogger(getClass().getName()).info("\nreaderType*********************action=" + action);
         if (action == null || "".equals(action)) {
             request.setAttribute("error", "您的操作有误！");
             return mapping.findForward("error");
@@ -47,7 +48,7 @@ public class ReaderType extends Action {
                                         HttpServletRequest request,
                                         HttpServletResponse response) {
         ReaderTypeForm readerTypeForm = (ReaderTypeForm) form;
-        System.out.println("servlet:" + request.getParameter("name"));
+        Logger.getLogger(getClass().getName()).info("servlet:" + request.getParameter("name"));
         readerTypeForm.setName(readerTypeForm.getName());
         int a = readerTypeDAO.insert(readerTypeForm);
         if (a == 0) {

@@ -15,7 +15,7 @@ public class ChStr {
         return strvalue;
     }
 
-    //´¦Àí×Ö·û´®ÖĞµÄ¿ÕÖµ
+    //å¤„ç†å­—ç¬¦ä¸²ä¸­çš„ç©ºå€¼
     public static final String nullToString(String v, String toV) {
         if (v == null || "".equals(v)) {
             v = toV;

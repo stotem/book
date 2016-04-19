@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.logging.Logger;
 
 public class BookType extends Action {
     private BookTypeDAO bookTypeDAO = null;
@@ -22,7 +23,7 @@ public class BookType extends Action {
                                  HttpServletResponse response) {
 
         String action = request.getParameter("action");
-        System.out.println("\nbookType*********************action=" + action);
+        Logger.getLogger(getClass().getName()).info("\nbookType*********************action=" + action);
         if (action == null || "".equals(action)) {
             request.setAttribute("error", "您的操作有误！");
             return mapping.findForward("error");
@@ -48,7 +49,7 @@ public class BookType extends Action {
                                       HttpServletRequest request,
                                       HttpServletResponse response) {
         BookTypeForm bookTypeForm = (BookTypeForm) form;
-        System.out.println("servlet:" + bookTypeForm.getTypeName());
+        Logger.getLogger(getClass().getName()).info("servlet:" + bookTypeForm.getTypeName());
         bookTypeForm.setTypeName(bookTypeForm.getTypeName());
         int a = bookTypeDAO.insert(bookTypeForm);
         if (a == 0) {

@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.logging.Logger;
 
 public class Reader extends Action {
     private ReaderDAO readerDAO = null;
@@ -22,7 +23,7 @@ public class Reader extends Action {
                                  HttpServletRequest request,
                                  HttpServletResponse response) {
         String action = request.getParameter("action");
-        System.out.println("\nreader*********************action=" + action);
+        Logger.getLogger(getClass().getName()).info("\nreader*********************action=" + action);
         if (action == null || "".equals(action)) {
             request.setAttribute("error", "您的操作有误！");
             return mapping.findForward("error");
@@ -96,7 +97,7 @@ public class Reader extends Action {
                                             HttpServletRequest request,
                                             HttpServletResponse response) {
         ReaderForm readerForm = (ReaderForm) form;
-        System.out.println("查询修改读者信息：" + request.getParameter("ID"));
+        Logger.getLogger(getClass().getName()).info("查询修改读者信息：" + request.getParameter("ID"));
         readerForm.setId(Integer.valueOf(request.getParameter("ID")));
         request.setAttribute("readerQueryif", readerDAO.queryM(readerForm));
         return mapping.findForward("readerQueryModify");

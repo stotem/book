@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 public class ManagerDAO {
     private ConnDB conn = new ConnDB();
@@ -38,7 +39,7 @@ public class ManagerDAO {
                 managercoll.add(managerForm);
                 a++;
             }
-            System.out.println("��¼����" + a);
+            Logger.getLogger(getClass().getName()).info("查询管理员信息:" + a);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -168,7 +169,7 @@ public class ManagerDAO {
             } else {
                 sql = "INSERT INTO tb_manager (name,pwd) values(?, ?)";
                 falg = conn.executeUpdate(sql,managerForm.getName(),managerForm.getPwd());
-                System.out.println("��ӹ���Ա��Ϣ��SQL��" + sql);
+                Logger.getLogger(getClass().getName()).info("添加管理员:" + sql);
                 conn.close();
             }
         } catch (SQLException ex) {
@@ -216,7 +217,7 @@ public class ManagerDAO {
         String sql = "UPDATE tb_manager SET pwd=? where name=?";
         try {
             int ret = conn.executeUpdate(sql, managerForm.getPwd(),managerForm.getName());
-            System.out.println("�޸Ĺ���Ա����ʱ��SQL��" + sql);
+            Logger.getLogger(getClass().getName()).info("修改管理员信息:" + sql);
             return ret;
         } finally {
             if (conn != null) {

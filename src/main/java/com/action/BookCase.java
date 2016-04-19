@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.logging.Logger;
 
 public class BookCase extends Action {
     private BookCaseDAO bookCaseDAO = null;
@@ -21,7 +22,7 @@ public class BookCase extends Action {
                                  HttpServletRequest request,
                                  HttpServletResponse response) {
         String action = request.getParameter("action");
-        System.out.println("\nbookCase*********************action=" + action);
+        Logger.getLogger(getClass().getName()).info("\nbookCase*********************action=" + action);
         if (action == null || "".equals(action)) {
             return mapping.findForward("error");
         } else if ("bookCaseAdd".equals(action)) {
@@ -46,7 +47,7 @@ public class BookCase extends Action {
                                       HttpServletRequest request,
                                       HttpServletResponse response) {
         BookCaseForm bookCaseForm = (BookCaseForm) form;
-        System.out.println("servlet:" + request.getParameter("name"));
+        Logger.getLogger(getClass().getName()).info("servlet:" + request.getParameter("name"));
         bookCaseForm.setName(bookCaseForm.getName());
         int a = bookCaseDAO.insert(bookCaseForm);
         if (a == 0) {

@@ -46,7 +46,7 @@ CREATE TABLE `tb_bookinfo` (
   `page` int(10) unsigned DEFAULT NULL,
   `bookcase` int(10) unsigned DEFAULT NULL,
   `storage` int(10) unsigned DEFAULT NULL,
-  `inTime` date DEFAULT NULL,
+  `inTime` varchar(30) DEFAULT NULL,
   `operator` varchar(30) DEFAULT NULL,
   `del` tinyint(1) DEFAULT '0',
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -96,8 +96,8 @@ CREATE TABLE `tb_borrow` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `readerid` int(10) unsigned DEFAULT NULL,
   `bookid` int(10) DEFAULT NULL,
-  `borrowTime` date DEFAULT NULL,
-  `backTime` date DEFAULT NULL,
+  `borrowTime` varchar(30) DEFAULT NULL,
+  `backTime` varchar(30) DEFAULT NULL,
   `operator` varchar(30) DEFAULT NULL,
   `ifback` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -125,7 +125,7 @@ CREATE TABLE `tb_giveback` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `readerid` int(11) DEFAULT NULL,
   `bookid` int(11) DEFAULT NULL,
-  `backTime` date DEFAULT NULL,
+  `backTime` varchar(30) DEFAULT NULL,
   `operator` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
@@ -155,7 +155,7 @@ CREATE TABLE `tb_library` (
   `address` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `url` varchar(100) DEFAULT NULL,
-  `createDate` date DEFAULT NULL,
+  `createDate` varchar(30) DEFAULT NULL,
   `introduce` text,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -234,6 +234,8 @@ INSERT INTO `tb_purview` VALUES ('1', '1', '1', '1', '1', '1');
 -- ----------------------------
 -- Table structure for `tb_reader`
 -- ----------------------------
+-- ----------------------------
+-- ----------------------------
 DROP TABLE IF EXISTS `tb_reader`;
 CREATE TABLE `tb_reader` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -241,12 +243,12 @@ CREATE TABLE `tb_reader` (
   `sex` varchar(4) DEFAULT NULL,
   `barcode` varchar(30) DEFAULT NULL,
   `vocation` varchar(50) DEFAULT NULL,
-  `birthday` date DEFAULT NULL,
+  `birthday` varchar(30) DEFAULT NULL,
   `paperType` varchar(10) DEFAULT NULL,
   `paperNO` varchar(20) DEFAULT NULL,
   `tel` varchar(20) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `createDate` date DEFAULT NULL,
+  `createDate` varchar(30) DEFAULT NULL,
   `operator` varchar(30) DEFAULT NULL,
   `remark` text,
   `typeid` int(11) DEFAULT NULL,

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 public class BookTypeDAO {
     private ConnDB conn = new ConnDB();
@@ -43,7 +44,7 @@ public class BookTypeDAO {
     public BookTypeForm queryM(BookTypeForm bookTypeForm) {
         BookTypeForm bookTypeForm1 = null;
         String sql = "select * from tb_booktype where id=?";
-        System.out.println("SQL:" + sql);
+        Logger.getLogger(getClass().getName()).info("SQL:" + sql);
         ResultSet rs = conn.executeQuery(sql,bookTypeForm.getId());
         try {
             while (rs.next()) {
@@ -72,7 +73,7 @@ public class BookTypeDAO {
             } else {
                 sql = "Insert into tb_booktype (typename,days) values(?,?)";
                 falg = conn.executeUpdate(sql,bookTypeForm.getTypeName(),bookTypeForm.getDays());
-                System.out.println("͵SQL:" + sql);
+                Logger.getLogger(getClass().getName()).info("͵SQL:" + sql);
             }
         } catch (SQLException ex) {
             falg = 0;
@@ -80,7 +81,7 @@ public class BookTypeDAO {
         } finally {
             conn.close();
         }
-        System.out.println("falg:" + falg);
+        Logger.getLogger(getClass().getName()).info("falg:" + falg);
         return falg;
     }
 
@@ -89,7 +90,7 @@ public class BookTypeDAO {
         String sql = "Update tb_booktype set typename=?,days=? where id=?";
         try {
             int falg = conn.executeUpdate(sql,bookTypeForm.getTypeName(),bookTypeForm.getDays(),bookTypeForm.getId());
-            System.out.println("SQL:" + sql);
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return falg;
         } finally {
             if (conn != null) {
@@ -103,7 +104,7 @@ public class BookTypeDAO {
         String sql = "Delete from tb_booktype where id=?";
         try {
             int falg = conn.executeUpdate(sql,bookTypeForm.getId());
-            System.out.println("SQL:" + sql);
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return falg;
         } finally {
             if (conn != null) {

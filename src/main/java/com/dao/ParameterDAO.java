@@ -4,7 +4,7 @@ import com.actionForm.ParameterForm;
 import com.core.ConnDB;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class ParameterDAO {
     ConnDB conn = null;
@@ -37,7 +37,7 @@ public class ParameterDAO {
         String sql = "UPDATE tb_parameter SET cost=?,validity=?,remindDay=? where id=1";
         try {
             int ret = conn.executeUpdate(sql,parameterForm.getCost(),parameterForm.getValidity(),parameterForm.getRemindDay());
-            System.out.println("�޸Ĳ���������Ϣʱ��SQL��" + sql);
+            Logger.getLogger(getClass().getName()).info("修改系统参数:" + sql);
             return ret;
         } finally {
             conn.close();

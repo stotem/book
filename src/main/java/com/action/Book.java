@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.logging.Logger;
 
 public class Book extends Action {
     private BookDAO bookDAO = null;
@@ -22,7 +23,7 @@ public class Book extends Action {
                                  HttpServletRequest request,
                                  HttpServletResponse response) {
         String action = request.getParameter("action");
-        System.out.println("\nbook*********************action=" + action);
+        Logger.getLogger(getClass().getName()).info("\nbook*********************action=" + action);
         if (action == null || "".equals(action)) {
             request.setAttribute("error", "您的操作有误！");
             return mapping.findForward("error");
@@ -113,7 +114,7 @@ public class Book extends Action {
                                           HttpServletRequest request,
                                           HttpServletResponse response) {
         BookForm bookForm = (BookForm) form;
-        System.out.println("查询修改图书信息：" + request.getParameter("ID"));
+        Logger.getLogger(getClass().getName()).info("查询修改图书信息：" + request.getParameter("ID"));
         bookForm.setId(Integer.valueOf(request.getParameter("ID")));
         request.setAttribute("bookQueryif", bookDAO.queryM(bookForm));
         return mapping.findForward("bookQueryModify");

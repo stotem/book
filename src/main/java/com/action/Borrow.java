@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 public class Borrow extends Action {
     private BorrowDAO borrowDAO = null;
@@ -32,7 +33,7 @@ public class Borrow extends Action {
                                  HttpServletResponse response) {
         BorrowForm borrowForm = (BorrowForm) form;
         String action = request.getParameter("action");
-        System.out.println("\nborrow*********************action=" + action);
+        Logger.getLogger(getClass().getName()).info("\nborrow*********************action=" + action);
         if (action == null || "".equals(action)) {
             request.setAttribute("error", "您的操作有误！");
             return mapping.findForward("error");
@@ -101,14 +102,14 @@ public class Borrow extends Action {
                     str = "borrowTime between '" + sdate + "' and '" + edate +
                             "'";
                 }
-                System.out.println("日期" + str);
+                Logger.getLogger(getClass().getName()).info("日期" + str);
             }
             //同时选择日期和条件进行查询
             if (flag.length == 2) {
                 if (f != null && key != null) {
                     str = f + " like '" + key+ "%'";
                 }
-                System.out.println("日期和条件");
+                Logger.getLogger(getClass().getName()).info("日期和条件");
                 String sdate = request.getParameter("sdate");
                 String edate = request.getParameter("edate");
                 String str1 = null;
@@ -117,7 +118,7 @@ public class Borrow extends Action {
                             "'";
                 }
                 str = str + " and borr." + str1;
-                System.out.println("条件和日期：" + str);
+                Logger.getLogger(getClass().getName()).info("条件和日期：" + str);
             }
         }
         request.setAttribute("borrowQuery", borrowDAO.borrowQuery(str));

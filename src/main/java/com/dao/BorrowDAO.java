@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.logging.Logger;
 
 public class BorrowDAO {
     ConnDB conn = new ConnDB();
@@ -33,7 +34,7 @@ public class BorrowDAO {
             calendar.add(Calendar.DAY_OF_MONTH,days);
             String sql = "Insert into tb_borrow (readerid,bookid,borrowTime,backTime,operator) values(?,?,?,?,?)";
             int falg = conn.executeUpdate(sql,readerForm.getId(),bookForm.getId(),new java.sql.Date(System.currentTimeMillis()),new  java.sql.Date(calendar.getTime().getTime()),operator);
-            System.out.println("SQL:" + sql);
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return falg;
         } finally {
             conn.close();
@@ -163,7 +164,7 @@ public class BorrowDAO {
                 coll.add(form);
             }
         } catch (SQLException ex) {
-            System.out.println("" + ex.getMessage());
+            Logger.getLogger(getClass().getName()).info("" + ex.getMessage());
         } finally {
             conn.close();
         }
@@ -191,7 +192,7 @@ public class BorrowDAO {
         calc.add(Calendar.DAY_OF_MONTH, day);
         String sql = "select borr.borrowTime,borr.backTime,book.barcode,book.bookname,r.name readername,r.barcode readerbarcode from tb_borrow borr join tb_bookinfo book on book.id=borr.bookid join tb_reader r on r.id=borr.readerid where borr.ifBack=0 and borr.backTime <=?";
         rs = conn.executeQuery(sql,new java.sql.Date(calc.getTime().getTime()));
-        System.out.println("ѵSQL:" + sql);
+        Logger.getLogger(getClass().getName()).info("ѵSQL:" + sql);
         Collection coll = new ArrayList();
         BorrowForm form = null;
         try {
@@ -204,10 +205,10 @@ public class BorrowDAO {
                 form.setReaderName(rs.getString(5));
                 form.setReaderBarcode(rs.getString(6));
                 coll.add(form);
-                System.out.println("룺" + rs.getString(3));
+                Logger.getLogger(getClass().getName()).info("룺" + rs.getString(3));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(getClass().getName()).info(ex.getMessage());
         } finally {
             conn.close();
         }
@@ -223,7 +224,7 @@ public class BorrowDAO {
             sql = "select * from (select borr.borrowTime,borr.backTime,book.barcode,book.bookname,r.name readername,r.barcode readerbarcode,borr.ifback from tb_borrow borr join tb_bookinfo book on book.id=borr.bookid join tb_reader r on r.id=borr.readerid) as borr";
         }
         ResultSet rs = conn.executeQuery(sql);
-        System.out.println("ĲSQL:" + sql);
+        Logger.getLogger(getClass().getName()).info("ĲSQL:" + sql);
         Collection coll = new ArrayList();
         BorrowForm form = null;
         try {
@@ -239,7 +240,7 @@ public class BorrowDAO {
                 coll.add(form);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(getClass().getName()).info(ex.getMessage());
         } finally {
             conn.close();
         }
@@ -249,7 +250,7 @@ public class BorrowDAO {
     //*******************************************************************
     public Collection bookBorrowSort() {
         String sql = "select * from (SELECT bookid,count(bookid) as degree FROM tb_borrow group by bookid) as borr join (select b.*,c.name as bookcaseName,p.pubname,t.typename from tb_bookinfo b left join tb_bookcase c on b.bookcase=c.id join tb_publishing p on b.ISBN=p.ISBN join tb_booktype t on b.typeid=t.id where b.del=0) as book on borr.bookid=book.id order by borr.degree desc limit 10 ";
-        System.out.println("У" + sql);
+        Logger.getLogger(getClass().getName()).info("У" + sql);
         Collection coll = new ArrayList();
         BorrowForm form = null;
         ResultSet rs = conn.executeQuery(sql);
@@ -271,7 +272,7 @@ public class BorrowDAO {
                 System.out.print("RS" + rs.getString(4));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(getClass().getName()).info(ex.getMessage());
         } finally {
             conn.close();
         }
@@ -302,7 +303,7 @@ public class BorrowDAO {
             }
 //            }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(getClass().getName()).info(ex.getMessage());
         } finally {
             conn.close();
         }

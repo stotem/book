@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 public class BookDAO {
     private ConnDB conn = new ConnDB();
@@ -21,7 +22,7 @@ public class BookDAO {
         } else {
             sql = "select b.*,c.name as bookcaseName,p.pubname as publishing,t.typename from tb_bookinfo b left join tb_bookcase c on b.bookcase=c.id join tb_publishing p on b.ISBN=p.ISBN join tb_booktype t on b.typeid=t.id where b.del=0";
         }
-        System.out.println("SQL:" + sql);
+        Logger.getLogger(getClass().getName()).info("SQL:" + sql);
         ResultSet rs = conn.executeQuery(sql);
         try {
             while (rs.next()) {
@@ -58,7 +59,7 @@ public class BookDAO {
     public BookForm queryM(BookForm bookForm) {
         BookForm bookForm1 = null;
         String sql = "select b.*,c.name as bookcaseName,p.pubname as publishing,t.typename from tb_bookinfo b left join tb_bookcase c on b.bookcase=c.id join tb_publishing p on b.ISBN=p.ISBN join tb_booktype t on b.typeid=t.id where b.id=?";
-        System.out.println("SQL:" + sql);
+        Logger.getLogger(getClass().getName()).info("SQL:" + sql);
         ResultSet rs = conn.executeQuery(sql,bookForm.getId());
         try {
             while (rs.next()) {
@@ -93,7 +94,7 @@ public class BookDAO {
         Collection collection = new ArrayList();
         BookForm bookForm1 = null;
         String sql = "select b.*,c.name as bookcaseName,p.pubname as publishing,t.typename from tb_bookinfo b left join tb_bookcase c on b.bookcase=c.id join tb_publishing p on b.ISBN=p.ISBN join tb_booktype t on b.typeid=t.id where b." + f + " like '" + key + "%'";
-        System.out.println("SQL:"+ sql);
+        Logger.getLogger(getClass().getName()).info("SQL:"+ sql);
         ResultSet rs = conn.executeQuery(sql);
         try {
             while (rs.next()) {
@@ -128,7 +129,7 @@ public class BookDAO {
     public BookForm queryB(String f, String key) {
         BookForm bookForm1 = null;
         String sql = "select b.*,c.name as bookcaseName,p.pubname as publishing,t.typename from tb_bookinfo b left join tb_bookcase c on b.bookcase=c.id join tb_publishing p on b.ISBN=p.ISBN join tb_booktype t on b.typeid=t.id where b." + f + "='" + key + "'";
-        System.out.println("SQL:"+ sql);
+        Logger.getLogger(getClass().getName()).info("SQL:"+ sql);
         ResultSet rs = conn.executeQuery(sql);
         try {
             if (rs.next()) {
@@ -172,7 +173,7 @@ public class BookDAO {
                 sql = "Insert into tb_bookinfo (barcode,bookname,typeid,author,translator,isbn,price,page,bookcase,storage,inTime,operator) " +
                         "values(?,?,?,?,?,?,?,?,?,?,?,?)";
                 falg = conn.executeUpdate(sql,bookForm.getBarcode(),bookForm.getBookName(),bookForm.getTypeId(),bookForm.getAuthor(),bookForm.getTranslator(),bookForm.getIsbn(),bookForm.getPrice(),bookForm.getPage(),bookForm.getBookcaseid(),bookForm.getStorage(),bookForm.getInTime(),bookForm.getOperator());
-                System.out.println("SQL:" + sql);
+                Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             }
         } catch (SQLException ex) {
             falg = 0;
@@ -180,7 +181,7 @@ public class BookDAO {
         } finally {
             conn.close();
         }
-        System.out.println("falg:" + falg);
+        Logger.getLogger(getClass().getName()).info("falg:" + falg);
         return falg;
     }
 
@@ -189,7 +190,7 @@ public class BookDAO {
         String sql = "Update tb_bookinfo set typeid=?,author=?,translator=?,isbn=?,price=?,page=?,bookcase=?,storage=? where id=?";
         try {
             int falg = conn.executeUpdate(sql,bookForm.getTypeId(),bookForm.getAuthor(),bookForm.getTranslator(),bookForm.getIsbn(),bookForm.getPrice(),bookForm.getPage(),bookForm.getBookcaseid(),bookForm.getStorage(),bookForm.getId());
-            System.out.println("SQL:" + sql);
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return falg;
         } finally {
             if (conn != null) {
@@ -203,7 +204,7 @@ public class BookDAO {
         String sql = "UPDATE tb_bookinfo SET del=1 where id=?";
         try {
             int falg = conn.executeUpdate(sql,bookForm.getId());
-            System.out.println("SQL:" + sql);
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return falg;
         } finally {
             if (conn != null) {

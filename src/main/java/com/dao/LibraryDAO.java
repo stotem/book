@@ -4,7 +4,7 @@ import com.actionForm.LibraryForm;
 import com.core.ConnDB;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.logging.Logger;
 
 /**
  * <p>Title: LibraryManage</p>
@@ -53,7 +53,8 @@ public class LibraryDAO {
         String sql = "UPDATE tb_library SET libraryname=?,curator=?,tel=?,address=?,email=?,url=?,createDate=?,introduce=? where id=1";
         try {
             int ret = conn.executeUpdate(sql,libraryForm.getLibraryname(),libraryForm.getCurator(),libraryForm.getTel(),libraryForm.getAddress(),libraryForm.getEmail(),libraryForm.getUrl(),libraryForm.getCreateDate(),libraryForm.getIntroduce());
-            System.out.println("�޸�ͼ�����Ϣʱ��SQL��" + sql);
+
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return ret;
         } finally {
             if (conn != null) {

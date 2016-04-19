@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 public class ReaderTypeDAO {
     private ConnDB conn = new ConnDB();
@@ -42,7 +43,7 @@ public class ReaderTypeDAO {
     public ReaderTypeForm queryM(ReaderTypeForm readerTypeForm) {
         ReaderTypeForm readerTypeForm1 = null;
         String sql = "select * from tb_readertype where id=?";
-        System.out.println("SQL:" + sql);
+        Logger.getLogger(getClass().getName()).info("SQL:" + sql);
         ResultSet rs = conn.executeQuery(sql,readerTypeForm.getId());
         try {
             while (rs.next()) {
@@ -50,7 +51,6 @@ public class ReaderTypeDAO {
                 readerTypeForm1.setId(Integer.valueOf(rs.getString(1)));
                 readerTypeForm1.setName(rs.getString(2));
                 readerTypeForm1.setNumber(rs.getInt(3));
-                System.out.println(rs.getInt(3));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -72,7 +72,7 @@ public class ReaderTypeDAO {
             } else {
                 sql = "Insert into tb_readertype (name,number) values(?,?)";
                 falg = conn.executeUpdate(sql,readerTypeForm.getName(),readerTypeForm.getNumber());
-                System.out.println("͵SQL:" + sql);
+                Logger.getLogger(getClass().getName()).info("͵SQL:" + sql);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -81,7 +81,7 @@ public class ReaderTypeDAO {
             conn.close();
 
         }
-        System.out.println("falg:" + falg);
+        Logger.getLogger(getClass().getName()).info("falg:" + falg);
         return falg;
     }
 
@@ -90,7 +90,7 @@ public class ReaderTypeDAO {
         String sql = "Update tb_readertype set name=?,number=? where id=?";
         try {
             int falg = conn.executeUpdate(sql,readerTypeForm.getName(),readerTypeForm.getNumber(),readerTypeForm.getId() );
-            System.out.println("SQL:" + sql);
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return falg;
         } finally {
             conn.close();
@@ -102,7 +102,7 @@ public class ReaderTypeDAO {
         String sql = "Delete from tb_readertype where id=?";
         try {
             int falg = conn.executeUpdate(sql,readerTypeForm.getId() );
-            System.out.println("SQL:" + sql);
+            Logger.getLogger(getClass().getName()).info("SQL:" + sql);
             return falg;
         } finally {
             conn.close();

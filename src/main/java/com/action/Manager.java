@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.logging.Logger;
 
 public class Manager extends Action {
     private ManagerDAO managerDAO = null;
@@ -22,7 +23,7 @@ public class Manager extends Action {
                                  HttpServletRequest request,
                                  HttpServletResponse response) {
         String action = request.getParameter("action");
-        System.out.println("获取的查询字符串：" + action);
+        Logger.getLogger(getClass().getName()).info("获取的查询字符串：" + action);
         if (action == null || "".equals(action)) {
             return mapping.findForward("error");
         } else if ("login".equals(action)) {
@@ -84,7 +85,7 @@ public class Manager extends Action {
         managerForm.setName(managerForm.getName());
         managerForm.setPwd(managerForm.getPwd());
         int ret = managerDAO.insert(managerForm);
-        System.out.println("返回值ret：" + ret);
+        Logger.getLogger(getClass().getName()).info("返回值ret：" + ret);
         if (ret == 1) {
             return mapping.findForward("managerAdd");
         } else if (ret == 2) {
